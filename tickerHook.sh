@@ -18,7 +18,7 @@ handle_tick() {
     local price=$(echo "$data" | jq -r '.p // empty')
     local symbol=$(echo "$data" | jq -r '.s // empty')
 
-    if [ -n "$price" ] && [ "$price" != "$last_price" ]; then
+    if [ "$price" != "$last_price" ]; then
         last_price="$price"
         "$CALLBACK" "$price" "$symbol" && exit 0
     fi
