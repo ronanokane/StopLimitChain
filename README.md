@@ -14,7 +14,7 @@ Secret Key<br>
 
 Replace lines two and four with your API key and secret key.
 
-Usage: ./orderTriggerTwoStep.sh \<OPERATION\> \<SYMBOL\> <BOUNDARY_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_TO_BUY_OR_SELL>
+Usage: ./orderTrigger2Step.sh \<OPERATION\> \<SYMBOL\> <BOUNDARY_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_TO_BUY_OR_SELL>
 
 There is four operations
 
@@ -25,6 +25,6 @@ There is four operations
 
 An example usage would be:
 
-./orderTriggerTwoStep.sh LIMITBUY ZECUSDC 400 ETHUSDC ZECETH 50
+./orderTrigger2Step.sh LIMITBUY ZECUSDC 400 ETHUSDC ZECETH 50
 
 This will run a LIMIT buy for ZEC with trigger at 400 dollar. When trigger is hit 50 percent of your wallet USDC balance will purchase ETH and subsequently ZEC.
