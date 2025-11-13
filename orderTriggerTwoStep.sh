@@ -68,4 +68,5 @@ case "$operation" in
         ;;
 esac
 
+./updatehwclock.sh
 . ./tickerHook.sh "$symbol" callBack
