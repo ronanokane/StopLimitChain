@@ -1,9 +1,7 @@
 HOW TO USE
 ==========
 
-Purpose: There is symbols that lack a direct pairing with EUR or USDC and this complicates running say a LIMIT buy as there is no listed
-symbol. For example ZEC could only be traded with ETH and BTC for a while. The only way to get around this was to buy ETH first. The ideal
-way to do it is only do the USDC->ETH ETH->ZEC at the triggure point. This isn' t possible with the default orders on binance. The script solves this.
+Purpose: Binance doesn’t support limit or stop orders for unlisted fiat/stablecoin pairs. This project automates indirect two-step orders to fill that gap.
 
 Dependencies: websocat
 
