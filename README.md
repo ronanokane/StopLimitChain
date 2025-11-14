@@ -29,4 +29,5 @@ An example usage would be:
 
 This will run a LIMIT buy for ZEC with trigger at 400 dollar. When trigger is hit 50 percent of your wallet USDC balance will purchase ETH and subsequently ZEC.
 
-Tip: Use USDT as default symbol. It is most widely available quote currency even when USDC and EUR has no listing. Just adjust step1 and step2 according to what is listed.
+Tip: Use USDT as default symbol. It isn' t tradeable here in (Europe) but it still functions as most widespread ticker even if symbol unlisted for trading
+by region. Just adjust step1 and step1 accordingly.
