@@ -25,6 +25,8 @@ There is four operations
 
 An example usage would be:
 
-./orderTrigger2Step.sh LIMITBUY ZECUSDC 400 ETHUSDC ZECETH 50
+./orderTrigger2Step.sh LIMITBUY ZECUSDT 400 ETHUSDC ZECETH 50
 
 This will run a LIMIT buy for ZEC with trigger at 400 dollar. When trigger is hit 50 percent of your wallet USDC balance will purchase ETH and subsequently ZEC.
+
+Tip: Use USDT as default symbol. It is most widely available quote currency even when USDC and EUR has no listing. Just adjust step1 and step2 according to what is listed.
