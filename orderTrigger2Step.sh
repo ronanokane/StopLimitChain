@@ -32,8 +32,8 @@ callBack() {
     if [ "$condition" -eq 1 ]; then
         echo "Operation: $operation"
         echo "Price: $price"
-        echo "Boundary: $priceBoundary"
-        echo "Condition met → Executing $action with $percentage%"
+        echo "Stop/Limit price: $priceBoundary"
+        echo "Condition met → Executing $action at $percentage% of balance"
        # $action "$firstStepSymbol" "$percentage" && $action "$secondStepSymbol" "$percentage"
 
        return $?
@@ -42,14 +42,14 @@ callBack() {
     return 1
 }
 
-if [ "$#" -ne 6 ] && [ $OPERATION == ] ; then
+if [ "$#" -ne 6 ] || [[ "$firstStepSymbol" != *"/"* ]] || [[ "$secondStepSymbol" != *"/"* ]]; then
     echo "Usage: ./${0##*/} <OPERATION> <SYMBOL> <BOUNDARY_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_TO_BUY_OR_SELL>"
     echo
     echo "Examples:"
-    echo "  ./${0##*/} LIMITBUY ZECUSDC 200 ETHUSDC ETHZEC 100"
-    echo "  ./${0##*/} LIMITSELL BTCUSDC 65000 ETHUSDC ETHBTC 50"
-    echo "  ./${0##*/} STOPBUY AVAXUSDC 40 ETHUSDC ETHAVAX 75"
-    echo "  ./${0##*/} STOPSELL SOLUSDC 180 ETHUSDC ETHSOL 25"
+    echo "  ./${0##*/} LIMITBUY ZECUSDC 200 ETH/USDC ETH/ZEC 100"
+    echo "  ./${0##*/} LIMITSELL BTCUSDC 65000 ETH/USDC ETH/BTC 50"
+    echo "  ./${0##*/} STOPBUY AVAXUSDC 40 ETH/USDC ETH/AVAX 75"
+    echo "  ./${0##*/} STOPSELL SOLUSDC 180 ETH/USDC ETH/SOL 25"
     echo
     echo "Supported operations:"
     echo "  LIMITBUY"
