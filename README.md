@@ -25,7 +25,7 @@ There is four operations
 
 An example usage would be:
 
-./orderTrigger2Step.sh LIMITBUY ZECUSDT 400 ETH/USDC ZEC/ETH 50
+./orderTrigger2Step.sh LIMITBUY ZEC/USDT 400 ETH/USDC ZEC/ETH 50
 
 This will run a LIMIT buy for ZEC with trigger at 400 dollar. When trigger is hit 50 percent of your wallet USDC balance will purchase ETH and subsequently ZEC.
 
