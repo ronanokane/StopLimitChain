@@ -34,10 +34,12 @@ callBack() {
         echo "Price: $price"
         echo "Boundary: $priceBoundary"
         echo "Condition met → Executing $action with $percentage%"
-
-        # Execute appropriate scripts
        # $action "$firstStepSymbol" "$percentage" && $action "$secondStepSymbol" "$percentage"
+
+       return $?
     fi
+
+    return 1
 }
 
 if [ "$#" -ne 6 ] && [ $OPERATION == ] ; then
