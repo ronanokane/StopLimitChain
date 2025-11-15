@@ -1,7 +1,7 @@
 #!/bin/bash
 
 operation=$1
-symbol=$2
+ticker_symbol=$2
 priceBoundary=$3
 firstStepSymbol=$4
 secondStepSymbol=$5
@@ -42,14 +42,14 @@ callBack() {
     return 1
 }
 
-if [ "$#" -ne 6 ] || [[ "$firstStepSymbol" != *"/"* ]] || [[ "$secondStepSymbol" != *"/"* ]]; then
+if [ "$#" -ne 6 ] || [[ "$ticker_symbol" != *"/"* ]] || [[ "$firstStepSymbol" != *"/"* ]] || [[ "$secondStepSymbol" != *"/"* ]]; then
     echo "Usage: ./${0##*/} <OPERATION> <SYMBOL> <BOUNDARY_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_TO_BUY_OR_SELL>"
     echo
     echo "Examples:"
-    echo "  ./${0##*/} LIMITBUY ZECUSDC 200 ETH/USDC ETH/ZEC 100"
-    echo "  ./${0##*/} LIMITSELL BTCUSDC 65000 ETH/USDC ETH/BTC 50"
-    echo "  ./${0##*/} STOPBUY AVAXUSDC 40 ETH/USDC ETH/AVAX 75"
-    echo "  ./${0##*/} STOPSELL SOLUSDC 180 ETH/USDC ETH/SOL 25"
+    echo "  ./${0##*/} LIMITBUY ZEC/USDC 200 ETH/USDC ETH/ZEC 100"
+    echo "  ./${0##*/} LIMITSELL BTC/USDC 65000 ETH/USDC ETH/BTC 50"
+    echo "  ./${0##*/} STOPBUY AVAX/USDC 40 ETH/USDC ETH/AVAX 75"
+    echo "  ./${0##*/} STOPSELL SOL/USDC 180 ETH/USDC ETH/SOL 25"
     echo
     echo "Supported operations:"
     echo "  LIMITBUY"
@@ -70,5 +70,7 @@ case "$operation" in
         ;;
 esac
 
+ticker_symbol="$(echo $ticker_symbol | tr -d /)"
+
 ./updatehwclock.sh
-. ./tickerHook.sh "$symbol" callBack
+. ./tickerHook.sh "$ticker_symbol" callBack
