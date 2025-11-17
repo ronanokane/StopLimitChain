@@ -41,17 +41,48 @@ place_buy_order() {
   curl -s -H "X-MBX-APIKEY: $API_KEY" -X POST "$BASE_URL/api/v3/order" -d "$query_string&signature=$signature"
 }
 
-# Main Script
-if [ $# -lt 2 ] || [[ "$1" != *"/"* ]]; then
-  echo "Usage: $0 BTC/USDC PERCENTAGE_OF_USDC" >&2
-  exit 1
+SYMBOL=""
+PERCENTAGE=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -a)
+      AMOUNT_TO_SPEND="$2"
+      shift 2
+      ;;
+    *)
+      if [[ -z "$SYMBOL" ]]; then
+          if [[ "$1" != *"/"* ]]; then
+              echo "Missing bracket in symbol" >&2
+              exit 1
+          fi
+          QUOTE_ASSET="$(echo "$1" | cut -d '/' -f2)"          
+          SYMBOL="$(echo "$1" | cut -d '/' -f1)""$QUOTE_ASSET"
+          SYMBOL="${SYMBOL^^}"
+      else
+          PERCENTAGE="$1"
+      fi
+      shift
+      ;;
+  esac
+done
+
+if [[ -n "$AMOUNT_TO_SPEND" && -n "$PERCENTAGE" || -z "$SYMBOL" ]]; then
+    echo "Usage: buyAsset.sh <symbol> <percentage>"
+    echo "Usage: buyAsset.sh <symbol> -a <actual_amount>"    
+    exit 1
 fi
 
-SYMBOL="$(echo "$1" | cut -d '/' -f1)""$(echo "$1" | cut -d '/' -f2)"
-PERCENTAGE=$2
+if [[ -n "$AMOUNT_TO_SPEND" ]]; then
+    echo "Using actual amount: $AMOUNT_TO_SPEND $SYMBOL" >&2
+else
+    echo "Using percentage: $PERCENTAGE% of balance for $SYMBOL" >&2
+fi
+
+#exit 1
 
 # Get USDT balance
-USDT_BALANCE=$(get_balance "$(echo "$1" | cut -d '/' -f2)")
+USDT_BALANCE=$(get_balance "$QUOTE_ASSET")
 if [ -z "$USDT_BALANCE" ]; then
   echo "Error: Unable to fetch USDT balance." >&2
   exit 1
@@ -59,8 +90,10 @@ fi
 
 echo "Current USDT Balance: $USDT_BALANCE" >&2
 
-# Calculate USDT amount to spend
-AMOUNT_TO_SPEND=$(echo "$USDT_BALANCE $PERCENTAGE" | awk '{printf "%.2f", $1 * $2 / 100}')
+if [[ -n "$PERCENTAGE" ]]; then
+    AMOUNT_TO_SPEND=$(echo "$USDT_BALANCE $PERCENTAGE" | awk '{printf "%.8f", $1 * $2 / 100}')
+fi
+
 if (( $(echo "$AMOUNT_TO_SPEND <= 0" | bc -l) )); then
   echo "Error: Calculated USDC amount to spend is invalid." >&2
   exit 1

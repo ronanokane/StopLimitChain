@@ -36,17 +36,45 @@ place_sell_order() {
   curl -s -H "X-MBX-APIKEY: $API_KEY" -X POST "$BASE_URL/api/v3/order" -d "$query_string&signature=$signature"
 }
 
-# Main Script
-if [ $# -lt 2  ] || [[ "$1" != *"/"* ]]; then
-  echo "Usage: $0 BTC/USDC PERCENTAGE_OF_BALANCE" >&2
-  exit 1
+SYMBOL=""
+PERCENTAGE=""
+
+while [[ $# -gt 0 ]]; do
+  case "$1" in
+    -a)
+      AMOUNT_TO_SELL="$2"
+      shift 2
+      ;;
+    *)
+      if [[ -z "$SYMBOL" ]]; then
+          if [[ "$1" != *"/"* ]]; then
+              echo "Missing bracket in symbol" >&2
+              exit 1
+          fi
+          BASE_ASSET="$(echo "$1" | cut -d '/' -f1)"
+          SYMBOL="$BASE_ASSET""$(echo "$1" | cut -d '/' -f2)"
+          SYMBOL=${SYMBOL^^}
+      else
+          PERCENTAGE="$1"
+      fi
+      shift
+      ;;
+  esac
+done
+
+if [[ -n "$AMOUNT_TO_SELL" && -n "$PERCENTAGE" || -z "$SYMBOL" ]]; then
+    echo "Usage: buyAsset.sh <symbol> <percentage>" >&2
+    echo "Usage: buyAsset.sh <symbol> -a <actual_amount>">&2    
+    exit 1
 fi
 
-# Extract the base asset from the symbol
-BASE_ASSET="$(echo "$1" | cut -d '/' -f1)"
+if [[ -n "$AMOUNT_TO_SELL" ]]; then
+    echo "Using actual amount: $AMOUNT_TO_SELL $SYMBOL" >&2
+else
+    echo "Using percentage: $PERCENTAGE% of balance for $SYMBOL" >&2
+fi
 
-SYMBOL="$BASE_ASSET""$(echo "$1" | cut -d '/' -f2)"
-PERCENTAGE=$2
+#exit 1
 
 # Extract the base asset from the symbol
 # BASE_ASSET=$(echo "$SYMBOL" | sed 's/USDT//')
@@ -61,7 +89,11 @@ fi
 echo "Current $BASE_ASSET Balance: $ASSET_BALANCE" >&2
 
 # Calculate the quantity to sell
-AMOUNT_TO_SELL=$(echo "$ASSET_BALANCE $PERCENTAGE" | awk '{printf "%.8f", $1 * $2 / 100}')
+
+if [[ -n "$PERCENTAGE" ]]; then
+    AMOUNT_TO_SELL=$(echo "$ASSET_BALANCE $PERCENTAGE" | awk '{printf "%.8f", $1 * $2 / 100}')
+fi
+
 if (( $(echo "$AMOUNT_TO_SELL <= 0" | bc -l) )); then
   echo "Error: Calculated amount to sell is invalid." >&2
   exit 1
