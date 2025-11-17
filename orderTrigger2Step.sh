@@ -24,6 +24,10 @@ callBack() {
 
     # Determine buy/sell action
     if [[ "$operation" == *BUY ]]; then
+        # Disallow 100percent quote buy. Can cause buy failure due to volatility.
+        if (( $(echo "$percentage > 99" | bc -l) )); then
+            percentage=99
+        fi
         action="./buyAsset.sh"
     else
         action="./sellAsset.sh"
@@ -34,9 +38,17 @@ callBack() {
         echo "Price: $price"
         echo "Stop/Limit price: $priceBoundary"
         echo "Condition met → Executing $action at $percentage% of balance"
-       # $action "$firstStepSymbol" "$percentage" && $action "$secondStepSymbol" "$percentage"
 
-       return $?
+        amountField=$([[ "$action" == ".buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
+
+        if amount=$("$action" "$firstStepSymbol" "$percentage" | jq -r "$amountField"); then
+            if "$action" "$secondStepSymbol" -a "$amount"; then
+                echo "2 steps executed successfully..."
+                return $?
+            fi
+        fi
+
+        echo "Error executing one or more of orders..."
     fi
 
     return 1
@@ -72,5 +84,7 @@ esac
 
 ticker_symbol="$(echo $ticker_symbol | tr -d /)"
 
+# Sync clock first.
 ./updatehwclock.sh
+
 . ./tickerHook.sh "$ticker_symbol" callBack
