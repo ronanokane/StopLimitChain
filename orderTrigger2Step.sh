@@ -50,6 +50,7 @@ callBack() {
         fi
 
         echo "Error executing one or more of orders..."
+        exit 1
     fi
 
     return 1
@@ -84,13 +85,14 @@ case "$operation" in
 esac
 
 tradeAblePair(){
+    symbol=$(echo $1 | tr -d /)
     response=$(curl -s "https://api.binance.com/api/v3/exchangeInfo")
     binance_symbols=$(echo "$response" | jq -r '.symbols[].symbol')
-    echo "$binance_symbols" | grep -q "^${1}$" &> /dev/null
+    echo "$binance_symbols" | grep -q "^${symbol}$" &> /dev/null
 }
 
-! tradeAblePair "$(echo $firstStepSymbol | tr -d /)" && echo "$firstStepSymbol is not tradeable... select another" && exit 1
-! tradeAblePair "$(echo $secondStepSymbol | tr -d /)" && echo "$secondStepSymbol is not tradeable... select another" && exit 1
+! tradeAblePair "$firstStepSymbol" && echo "$firstStepSymbol is not tradeable... select another" && exit 1
+! tradeAblePair "$secondStepSymbol" && echo "$secondStepSymbol is not tradeable... select another" && exit 1
 
 ticker_symbol="$(echo $ticker_symbol | tr -d /)"
 
