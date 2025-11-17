@@ -42,6 +42,7 @@ callBack() {
         amountField=$([[ "$action" == ".buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
 
         if amount=$("$action" "$firstStepSymbol" "$percentage" | jq -r "$amountField"); then
+
             if "$action" "$secondStepSymbol" -a "$amount"; then
                 echo "2 steps executed successfully..."
                 return $?
@@ -81,6 +82,15 @@ case "$operation" in
         exit 1
         ;;
 esac
+
+tradeAblePair(){
+    response=$(curl -s "https://api.binance.com/api/v3/exchangeInfo")
+    binance_symbols=$(echo "$response" | jq -r '.symbols[].symbol')
+    echo "$binance_symbols" | grep -q "^${1}$" &> /dev/null
+}
+
+! tradeAblePair $firstStepSymbol && echo "$firstStepSymbol is not tradeable... select another" && exit 1
+! tradeAblePair $secondStepSymbol && echo "$secondStepSymbol is not tradeable... select another" && exit 1
 
 ticker_symbol="$(echo $ticker_symbol | tr -d /)"
 
