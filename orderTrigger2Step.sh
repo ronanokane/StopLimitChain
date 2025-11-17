@@ -39,9 +39,9 @@ callBack() {
         echo "Stop/Limit price: $priceBoundary"
         echo "Condition met → Executing $action at $percentage% of balance"
 
-        amountField=$([[ "$action" == ".buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
+        amountField=$([[ "$action" == "./buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
 
-        if amount=$("$action" "$firstStepSymbol" "$percentage" | jq -r "$amountField"); then
+        if amount=$("$action" "$firstStepSymbol" "$percentage" | tee /dev/tty | jq -r "$amountField"); then
 
             if "$action" "$secondStepSymbol" -a "$amount"; then
                 echo "2 steps executed successfully..."
@@ -89,8 +89,8 @@ tradeAblePair(){
     echo "$binance_symbols" | grep -q "^${1}$" &> /dev/null
 }
 
-! tradeAblePair $firstStepSymbol && echo "$firstStepSymbol is not tradeable... select another" && exit 1
-! tradeAblePair $secondStepSymbol && echo "$secondStepSymbol is not tradeable... select another" && exit 1
+! tradeAblePair "$(echo $firstStepSymbol | tr -d /)" && echo "$firstStepSymbol is not tradeable... select another" && exit 1
+! tradeAblePair "$(echo $secondStepSymbol | tr -d /)" && echo "$secondStepSymbol is not tradeable... select another" && exit 1
 
 ticker_symbol="$(echo $ticker_symbol | tr -d /)"
 
