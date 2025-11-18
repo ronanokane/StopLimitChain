@@ -3,7 +3,7 @@ HOW TO USE
 
 Purpose: Binance doesn’t support limit or stop orders for unlisted fiat/stablecoin pairs. This project automates indirect two-step orders to fill that gap.
 
-Dependencies: websocat
+Dependencies: websocat, jq
 
 Create a file named "binanceApikey" in the same folder as the scripts, with the following structure:
 
