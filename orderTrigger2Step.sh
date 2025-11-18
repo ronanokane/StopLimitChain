@@ -10,9 +10,8 @@ percentage=$6
 callBack() {
     local price=$1
     local condition=0
-    local action=""
+    local action="./sellAsset.sh"
 
-    # Determine comparison operator
     case "$operation" in
         LIMITBUY|STOPSELL)
             condition=$(echo "$price <= $priceBoundary" | bc)
@@ -22,37 +21,28 @@ callBack() {
             ;;
     esac
 
-    # Determine buy/sell action
     if [[ "$operation" == *BUY ]]; then
-        # Disallow 100percent quote buy. Can cause buy failure due to volatility.
+        # 100% buys at quote balance will likely fail due to Volatility. Cap at 99
         if (( $(echo "$percentage > 99" | bc -l) )); then
             percentage=99
         fi
         action="./buyAsset.sh"
-    else
-        action="./sellAsset.sh"
     fi
 
     if [ "$condition" -eq 1 ]; then
-        echo "Operation: $operation"
-        echo "Price: $price"
-        echo "Stop/Limit price: $priceBoundary"
-        echo "Condition met → Executing $action at $percentage% of balance"
 
         amountField=$([[ "$action" == "./buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
 
-        if amount=$("$action" "$firstStepSymbol" "$percentage" | tee /dev/tty | jq -r "$amountField"); then
+        if amount=$("$action" "$firstStepSymbol" "$percentage" | jq -r "$amountField"); then
 
-            if "$action" "$secondStepSymbol" -a "$amount"; then
+            if "$action" "$secondStepSymbol" -a "$amount" >/dev/null; then
                 echo "2 steps executed successfully..."
                 return $?
             fi
         fi
-
         echo "Error executing one or more of orders..."
         exit 1
     fi
-
     return 1
 }
 

@@ -68,11 +68,11 @@ if [[ -n "$AMOUNT_TO_SELL" && -n "$PERCENTAGE" || -z "$SYMBOL" ]]; then
     exit 1
 fi
 
-if [[ -n "$AMOUNT_TO_SELL" ]]; then
-    echo "Using actual amount: $AMOUNT_TO_SELL $SYMBOL" >&2
-else
-    echo "Using percentage: $PERCENTAGE% of balance for $SYMBOL" >&2
-fi
+# if [[ -n "$AMOUNT_TO_SELL" ]]; then
+#     echo "Using actual amount: $AMOUNT_TO_SELL $SYMBOL" >&2
+# else
+#     echo "Using percentage: $PERCENTAGE% of balance for $SYMBOL" >&2
+# fi
 
 #exit 1
 
@@ -86,7 +86,7 @@ if [ -z "$ASSET_BALANCE" ]; then
   exit 1
 fi
 
-echo "Current $BASE_ASSET Balance: $ASSET_BALANCE" >&2
+#echo "Current $BASE_ASSET Balance: $ASSET_BALANCE" >&2
 
 # Calculate the quantity to sell
 
@@ -134,7 +134,7 @@ if (( $(echo "$quantity < $LOT_SIZE" | bc -l) )); then
   exit 1
 fi
 
-echo "Calculated Quantity to Sell: $quantity" >&2
+#echo "Calculated Quantity to Sell: $quantity" >&2
 
 # Place the sell order
 RESPONSE=$(place_sell_order "$quantity")

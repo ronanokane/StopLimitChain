@@ -68,16 +68,16 @@ while [[ $# -gt 0 ]]; do
 done
 
 if [[ -n "$AMOUNT_TO_SPEND" && -n "$PERCENTAGE" || -z "$SYMBOL" ]]; then
-    echo "Usage: buyAsset.sh <symbol> <percentage>"
-    echo "Usage: buyAsset.sh <symbol> -a <actual_amount>"    
+    echo "Usage: buyAsset.sh <symbol> <percentage>" >&2
+    echo "Usage: buyAsset.sh <symbol> -a <actual_amount>" >&2    
     exit 1
 fi
 
-if [[ -n "$AMOUNT_TO_SPEND" ]]; then
-    echo "Using actual amount: $AMOUNT_TO_SPEND $SYMBOL" >&2
-else
-    echo "Using percentage: $PERCENTAGE% of balance for $SYMBOL" >&2
-fi
+# if [[ -n "$AMOUNT_TO_SPEND" ]]; then
+#     echo "Using actual amount: $AMOUNT_TO_SPEND $SYMBOL" >&2
+# else
+#     echo "Using percentage: $PERCENTAGE% of balance for $SYMBOL" >&2
+# fi
 
 #exit 1
 
@@ -88,7 +88,7 @@ if [ -z "$USDT_BALANCE" ]; then
   exit 1
 fi
 
-echo "Current USDT Balance: $USDT_BALANCE" >&2
+#echo "Current USDT Balance: $USDT_BALANCE" >&2
 
 if [[ -n "$PERCENTAGE" ]]; then
     AMOUNT_TO_SPEND=$(echo "$USDT_BALANCE $PERCENTAGE" | awk '{printf "%.8f", $1 * $2 / 100}')
@@ -107,7 +107,7 @@ if [ -z "$MARKET_PRICE" ]; then
   echo "Error: Unable to fetch market price for $SYMBOL." >&2
   exit 1
 fi
-echo "Market Price for $SYMBOL: $MARKET_PRICE" >&2
+#echo "Market Price for $SYMBOL: $MARKET_PRICE" >&2
 
 # Get LOT_SIZE info
 LOT_SIZE_INFO=$(get_lot_size)
@@ -133,7 +133,7 @@ if (( $(echo "$quantity < $minQty" | bc -l) )); then
   exit 1
 fi
 
-echo "Calculated Quantity: $quantity" >&2
+#echo "Calculated Quantity: $quantity" >&2
 
 # Place the buy order
 RESPONSE=$(place_buy_order "$quantity")
