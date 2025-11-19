@@ -14,7 +14,7 @@ Secret Key<br>
 
 Replace lines two and four with your API key and secret key.
 
-Usage: ./orderTrigger2Step.sh \<OPERATION\> \<TICKER_SYMBOL\> <BOUNDARY_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_WALLET_USDC>
+Usage: ./orderTrigger2Step.sh \<OPERATION\> \<TICKER_SYMBOL\> <TRIGGER_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_WALLET_USDC>
 
 There is four operations
 
