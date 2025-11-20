@@ -14,6 +14,8 @@ Secret Key<br>
 
 Replace lines two and four with your API key and secret key.
 
+Run "./updatehwclock.sh" to ensure your clock is properly in sync.
+
 Usage: ./orderTrigger2Step.sh \<OPERATION\> \<TICKER_SYMBOL\> <TRIGGER_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_WALLET_USDC>
 
 There is four operations
