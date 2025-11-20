@@ -92,8 +92,6 @@ tradeAblePair(){
 ! tradeAblePair "$firstStepSymbol" && echo "$firstStepSymbol is not tradeable... select another" && exit 1
 [ "$secondStepSymbol" != "-" ] && ! tradeAblePair "$secondStepSymbol" && echo "$secondStepSymbol is not tradeable... select another" && exit 1
 
-exit 1
-
 ticker_symbol="$(echo $ticker_symbol | tr -d /)"
 
 # Sync clock first.
