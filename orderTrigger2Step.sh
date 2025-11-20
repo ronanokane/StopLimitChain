@@ -35,6 +35,11 @@ callBack() {
 
         if amount=$("$action" "$firstStepSymbol" "$percentage" | jq -r "$amountField"); then
 
+            if [ "$secondStepSymbol" = "-" ]; then
+                echo "order executed successfully..."
+                return $?
+            fi
+
             if "$action" "$secondStepSymbol" -a "$amount" >/dev/null; then
                 echo "2 steps executed successfully..."
                 return $?
@@ -46,7 +51,7 @@ callBack() {
     return 1
 }
 
-if [ "$#" -ne 6 ] || [[ "$ticker_symbol" != *"/"* ]] || [[ "$firstStepSymbol" != *"/"* ]] || [[ "$secondStepSymbol" != *"/"* ]]; then
+if [ "$#" -ne 6 ] || [[ "$ticker_symbol" != *"/"* ]] || [[ "$firstStepSymbol" != *"/"* ]] || [[ "$secondStepSymbol" != *"/"* ]] && [ "$secondStepSymbol" != "-" ]; then
     echo "Usage: ./${0##*/} <OPERATION> <SYMBOL> <BOUNDARY_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_TO_BUY_OR_SELL>"
     echo
     echo "Examples:"
@@ -54,6 +59,9 @@ if [ "$#" -ne 6 ] || [[ "$ticker_symbol" != *"/"* ]] || [[ "$firstStepSymbol" !=
     echo "  ./${0##*/} LIMITSELL BTC/USDC 65000 ETH/USDC ETH/BTC 50"
     echo "  ./${0##*/} STOPBUY AVAX/USDC 40 ETH/USDC ETH/AVAX 75"
     echo "  ./${0##*/} STOPSELL SOL/USDC 180 ETH/USDC ETH/SOL 25"
+    echo "  ./${0##*/} STOPSELL SOL/USDC 180 ETH/USDC - 25"
+    echo 
+    echo "  \"-\" in <STEP2_SYMBOL> skip step2"
     echo
     echo "Supported operations:"
     echo "  LIMITBUY"
@@ -82,7 +90,9 @@ tradeAblePair(){
 }
 
 ! tradeAblePair "$firstStepSymbol" && echo "$firstStepSymbol is not tradeable... select another" && exit 1
-! tradeAblePair "$secondStepSymbol" && echo "$secondStepSymbol is not tradeable... select another" && exit 1
+[ "$secondStepSymbol" != "-" ] && ! tradeAblePair "$secondStepSymbol" && echo "$secondStepSymbol is not tradeable... select another" && exit 1
+
+exit 1
 
 ticker_symbol="$(echo $ticker_symbol | tr -d /)"
 
