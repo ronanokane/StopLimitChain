@@ -94,7 +94,4 @@ tradeAblePair(){
 
 ticker_symbol="$(echo $ticker_symbol | tr -d /)"
 
-# Sync clock first.
-./updatehwclock.sh
-
 . ./tickerHook.sh "$ticker_symbol" callBack
