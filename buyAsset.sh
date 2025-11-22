@@ -61,6 +61,11 @@ while [[ $# -gt 0 ]]; do
           SYMBOL="${SYMBOL^^}"
       else
           PERCENTAGE="$1"
+
+          # Buying at 100% is likely to fail due to volatility. Cap at 99 to avoid failure.
+          if (( $(echo "$PERCENTAGE > 99" | bc -l) )); then
+              PERCENTAGE=99
+          fi
       fi
       shift
       ;;
