@@ -21,13 +21,7 @@ callBack() {
             ;;
     esac
 
-    if [[ "$operation" == *BUY ]]; then
-        # 100% buys at quote balance will likely fail due to Volatility. Cap at 99
-        if (( $(echo "$percentage > 99" | bc -l) )); then
-            percentage=99
-        fi
-        action="./buyAsset.sh"
-    fi
+    [[ "$operation" == *BUY ]] && action="./buyAsset.sh"
 
     if [ "$condition" -eq 1 ]; then
 
