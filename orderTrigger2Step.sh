@@ -76,15 +76,16 @@ case "$operation" in
         ;;
 esac
 
-tradeAblePair(){
-    symbol=$(echo $1 | tr -d /)
-    response=$(curl -s "https://api.binance.com/api/v3/exchangeInfo")
-    binance_symbols=$(echo "$response" | jq -r '.symbols[].symbol')
-    echo "$binance_symbols" | grep -q "^${symbol}$" &> /dev/null
+validSymbol(){
+    local symbol=$(echo $1 | tr -d /)
+    echo "$binance_symbols" | grep -q "^${symbol}$"
 }
 
-! tradeAblePair "$firstStepSymbol" && echo "$firstStepSymbol is not tradeable... select another" && exit 1
-[ "$secondStepSymbol" != "-" ] && ! tradeAblePair "$secondStepSymbol" && echo "$secondStepSymbol is not tradeable... select another" && exit 1
+binance_symbols=$(curl -s "https://api.binance.com/api/v3/exchangeInfo" | jq -r '.symbols[].symbol')
+
+! validSymbol "$ticker_symbol" && echo "$ticker_symbol is invalid... select another" && exit 1
+! validSymbol "$firstStepSymbol" && echo "$firstStepSymbol is invalid... select another" && exit 1
+[ "$secondStepSymbol" != "-" ] && ! validSymbol "$secondStepSymbol" && echo "$secondStepSymbol is invalid.. select another" && exit 1;
 
 ticker_symbol="$(echo $ticker_symbol | tr -d /)"
 
