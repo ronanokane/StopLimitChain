@@ -1,7 +1,7 @@
 HOW TO USE
 ==========
 
-Purpose: Binance doesn’t support limit or stop orders for unlisted fiat/stablecoin pairs. This project automates indirect two-step orders to fill that gap.
+Purpose: Binance doesn’t support limit or stop orders for unlisted fiat/stablecoin pairs. This project automates indirect two-step orders to fill that gap. Originally wrote to get around the removal of ZEC/USDC pair listing. You could only buy it with ETH and BTC.
 
 Dependencies: websocat, jq
 
