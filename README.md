@@ -18,7 +18,7 @@ Run "sudo ./updatehwclock.sh" to ensure your clock is properly in sync.
 
 Followed by intermediaryTradeOrder.sh 
 
-Usage: ./intermediaryTradeOrder.sh \<OPERATION\> \<TICKER_SYMBOL\> <TRIGGER_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_WALLET_USDC>
+Usage: ./unlistedTradeOrder.sh \<OPERATION\> \<TICKER_SYMBOL\> <TRIGGER_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_WALLET_USDC>
 
 There is four operations
 
@@ -29,7 +29,7 @@ There is four operations
 
 An example usage would be:
 
-./intermediaryTradeOrder.sh LIMITBUY ZEC/USDT 400 ETH/USDC ZEC/ETH 50
+./unlistedTradeOrder.sh LIMITBUY ZEC/USDT 400 ETH/USDC ZEC/ETH 50
 
 This will run a LIMIT buy for ZEC with trigger at 400 dollar. When trigger is hit 50 percent of your wallet USDC balance will purchase ETH and subsequently ZEC.
 
