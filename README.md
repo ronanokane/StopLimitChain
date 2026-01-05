@@ -16,7 +16,7 @@ Replace lines two and four with your API key and secret key.
 
 Run "sudo ./updatehwclock.sh" to ensure your clock is properly in sync.
 
-Followed by intermediaryTradeOrder.sh 
+Followed by unlistedTradeOrder.sh 
 
 Usage: ./unlistedTradeOrder.sh \<OPERATION\> \<TICKER_SYMBOL\> <TRIGGER_PRICE> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENTAGE_WALLET_USDC>
 
