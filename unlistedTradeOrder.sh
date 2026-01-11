@@ -24,19 +24,19 @@ callBack() {
     [[ "$operation" == *BUY ]] && action="./buyAsset.sh"
 
     if [ "$condition" -eq 1 ]; then
+        local amountField=$([[ "$action" == "./buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
+        local json=$("$action" "$firstStepSymbol" "$percentage" 2>/dev/null)
+        local amount=$(echo "$json" | jq -r "$amountField")
 
-        amountField=$([[ "$action" == "./buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
-
-        if amount=$("$action" "$firstStepSymbol" "$percentage" | jq -r "$amountField"); then
-
+        if [ -n "$json" ]; then
             if [ "$secondStepSymbol" = "-" ]; then
                 echo "order executed successfully..."
-                return $?
+                return 0
             fi
 
             if "$action" "$secondStepSymbol" -a "$amount" >/dev/null; then
                 echo "2 steps executed successfully..."
-                return $?
+                return 0
             fi
         fi
         echo "Error executing one or more of orders..."
