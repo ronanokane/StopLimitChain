@@ -39,5 +39,5 @@ curl -s "https://api.binance.com/api/v3/exchangeInfo" | jq -r '.symbols[].symbol
 
 Should give you a list of useable USDT ticker symbols.
 
-STEP1_SYMBOL can optionally be set to "-" to skip step2, making it behave like a regular order.<br>
-STEP2_SYMBOL can also be set to "-" to skip both buy/sell actions providing an opportunity to override with your own external command/s scripts.
+STEP2_SYMBOL can optionally be set to "-" to skip step2, making it behave like a regular order.<br>
+STEP1_SYMBOL can also be set to "-" to skip both buy/sell actions providing an opportunity to override with your own external command/s scripts.
