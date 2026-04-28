@@ -24,6 +24,8 @@ callBack() {
     [[ "$operation" == *BUY ]] && action="./buyAsset.sh"
 
     if [ "$condition" -eq 1 ]; then
+        [ "$firstStepSymbol" = "-" ] && return 0
+    
         local amountField=$([[ "$action" == "./buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
         local json=$("$action" "$firstStepSymbol" "$percentage" 2>/dev/null)
 
@@ -84,8 +86,8 @@ validSymbol(){
 binance_symbols=$(curl -s "https://api.binance.com/api/v3/exchangeInfo" | jq -r '.symbols[].symbol')
 
 ! validSymbol "$ticker_symbol" && echo "$ticker_symbol is invalid... select another" && exit 1
-! validSymbol "$firstStepSymbol" && echo "$firstStepSymbol is invalid... select another" && exit 1
 [ "$secondStepSymbol" != "-" ] && ! validSymbol "$secondStepSymbol" && echo "$secondStepSymbol is invalid.. select another" && exit 1;
+[ "$firstStepSymbol" != "-" ] && ! validSymbol "$firstStepSymbol" && echo "$fistStepSymbol is invalid.. select another" && exit 1;
 
 ticker_symbol="$(echo $ticker_symbol | tr -d /)"
 

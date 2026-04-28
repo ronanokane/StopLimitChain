@@ -25,6 +25,7 @@ handle_tick() {
 }
 
 #echo "Connecting to $WEBSOCKET_URL..."
-websocat -n "$WEBSOCKET_URL" 2> /dev/null | while read -r line; do
+#websocat --exit-on-eof "$WEBSOCKET_URL" | while read -r line; do
+websocat -n "$WEBSOCKET_URL" 2>/dev/null | while read -r line; do
     handle_tick "$line"
 done
