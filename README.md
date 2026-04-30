@@ -41,3 +41,10 @@ Should give you a list of useable USDT ticker symbols.
 
 STEP2_SYMBOL can optionally be set to "-" to skip step2, making it behave like a regular order.<br>
 STEP1_SYMBOL can also be set to "-" to skip both buy/sell actions providing an opportunity to override with your own external command/s scripts. Just check return code 0 (success).
+
+For example:
+
+./StopLimitChain.sh LIMITSELL SOL/USDC 83.43 - - 100 && ../cancelOrder.sh SOL/USDC 3537113962 && ../sellAsset.sh SOL/USDC 50
+
+This is useful for being able to run a LIMIT or STOP sell on an asset with an already in place stop loss. Something not possible with a standard LIMIT sell as the
+order cannot be placed before the stop loss is removed first.
