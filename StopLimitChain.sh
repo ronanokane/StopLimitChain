@@ -56,8 +56,10 @@ if [ "$#" -ne 6 ] || [[ "$ticker_symbol" != *"/"* ]] || [[ "$firstStepSymbol" !=
     echo "  ./${0##*/} STOPBUY AVAX/USDC 40 ETH/USDC ETH/AVAX 75"
     echo "  ./${0##*/} STOPSELL SOL/USDC 180 ETH/USDC ETH/SOL 25"
     echo "  ./${0##*/} STOPSELL SOL/USDC 180 ETH/USDC - 25"
+    echo "  ./${0##*/} STOPSELL SOL/USDC 180 ETH/USDC - - 100"    
     echo 
     echo "  \"-\" in <STEP2_SYMBOL> skip step2"
+    echo "  \"-\" in <STEP1_SYMBOL> skip step1 & step2"    
     echo
     echo "Supported operations:"
     echo "  LIMITBUY"
