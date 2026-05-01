@@ -40,4 +40,11 @@ curl -s "https://api.binance.com/api/v3/exchangeInfo" | jq -r '.symbols[].symbol
 Should give you a list of useable USDT ticker symbols.
 
 STEP2_SYMBOL can optionally be set to "-" to skip step2, making it behave like a regular order.<br>
-STEP1_SYMBOL can also be set to "-" to skip both buy/sell actions providing an opportunity to override with your own external command/s scripts. Just check return code 0 (success).
+STEP1_SYMBOL can also be set to "-" to skip both buy/sell actions providing an opportunity to override with your own external command/s scripts. This allows for interesting flexibility.
+
+For example you can turn the STOP order into a STOP LIMIT order:
+
+STOP LIMIT sell<br>
+./StopLimitChain.sh STOPSELL RENDER/USDC 1.695 - - 100 && ./StopLimitChain.sh LIMITSELL RENDER/USDC 1.685 RENDER/USDC - 100<br>
+STOP LIMIT buy<br>
+./StopLimitChain.sh STOPBUY RENDER/USDC 1.695 - - 100 && ./StopLimitChain.sh LIMITBUY RENDER/USDC 1.705 RENDER/USDC - 100<br>
