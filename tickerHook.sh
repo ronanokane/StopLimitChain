@@ -12,7 +12,6 @@ WEBSOCKET_URL="wss://stream.binance.com:9443/ws/${CRYPTO_SYMBOL}@trade"
 
 last_price=""
 
-# Tick handler function
 handle_tick() {
     local data="$1"
     local price=$(echo "$data" | jq -r '.p // empty')
@@ -24,8 +23,8 @@ handle_tick() {
     fi
 }
 
-#echo "Connecting to $WEBSOCKET_URL..."
-#websocat --exit-on-eof "$WEBSOCKET_URL" | while read -r line; do
 websocat -n "$WEBSOCKET_URL" 2>/dev/null | while read -r line; do
     handle_tick "$line"
 done
+
+exit 1
