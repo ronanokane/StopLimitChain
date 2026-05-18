@@ -26,8 +26,6 @@ callBack() {
     [[ "$operation" == *BUY ]] && action="$SCRIPT_DIR/buyAsset.sh"
 
     if [ "$condition" -eq 1 ]; then
-         echo $price
-         echo $priceBoundary
         [ "$firstStepSymbol" = "-" ] && return 0
     
         local amountField=$([[ "$action" == "./buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
