@@ -23,8 +23,6 @@ handle_tick() {
     fi
 }
 
-websocat -n "$WEBSOCKET_URL" 2>/dev/null | while read -r line; do
+while read -r line; do
     handle_tick "$line"
-done
-
-exit 1
+done < <(websocat -n "$WEBSOCKET_URL" 2>/dev/null)
