@@ -28,7 +28,7 @@ callBack() {
     if [ "$condition" -eq 1 ]; then
         [ "$firstStepSymbol" = "-" ] && return 0
     
-        local amountField=$([[ "$action" == "./buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
+        local amountField=$([[ "$action" == "$SCRIPT_DIR/buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
         local json=$("$action" "$firstStepSymbol" "$percentage" 2>/dev/null)
 
         if [ $? -eq 0 ] && [ -n "$json" ]; then
