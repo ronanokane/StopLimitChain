@@ -7,10 +7,12 @@ firstStepSymbol=$4
 secondStepSymbol=$5
 percentage=$6
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 callBack() {
     local price=$1
     local condition=0
-    local action="./sellAsset.sh"
+    local action="$SCRIPT_DIR/sellAsset.sh"
 
     case "$operation" in
         LIMITBUY|STOPSELL)
@@ -21,9 +23,11 @@ callBack() {
             ;;
     esac
 
-    [[ "$operation" == *BUY ]] && action="./buyAsset.sh"
+    [[ "$operation" == *BUY ]] && action="$SCRIPT_DIR/buyAsset.sh"
 
     if [ "$condition" -eq 1 ]; then
+         echo $price
+         echo $priceBoundary
         [ "$firstStepSymbol" = "-" ] && return 0
     
         local amountField=$([[ "$action" == "./buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
@@ -93,4 +97,4 @@ binance_symbols=$(curl -s "https://api.binance.com/api/v3/exchangeInfo" | jq -r 
 
 ticker_symbol="$(echo $ticker_symbol | tr -d /)"
 
-. ./tickerHook.sh "$ticker_symbol" callBack
+. "$SCRIPT_DIR/tickerHook.sh" "$ticker_symbol" callBack
