@@ -1,12 +1,17 @@
+#!/bin/bash
+
 operation=$1
 firstStepSymbol=$2
 secondStepSymbol=$3
 percentage=$4
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+action="$SCRIPT_DIR/sellAsset.sh"
+
 if [ "$operation" = "BUY" ]; then
-    action='./buyAsset.sh'
+    action="$SCRIPT_DIR/buyAsset.sh"
 elif [ "$operation" = "SELL" ]; then
-    action='./sellAsset.sh'
+    action="$SCRIPT_DIR/sellAsset.sh"
 fi
 
 if [ "$#" -ne 4 ] || [ -z "$action" ] || [[ "$firstStepSymbol" != *"/"* ]] || [[ "$secondStepSymbol" != *"/"* ]]; then
@@ -14,12 +19,12 @@ if [ "$#" -ne 4 ] || [ -z "$action" ] || [[ "$firstStepSymbol" != *"/"* ]] || [[
     echo >&2
     echo "Examples:" >&2
     echo "  ./${0##*/} BUY ETH/USDC ETH/ZEC 100" >&2
-    echo "  ./${0##*/} SELL ETH/USDC ETH/ZEC 100" >&2
+    echo "  ./${0##*/} SELL ETH/USDC ETH/ZEC 100" >&2#!/bin/bash
     echo >&2
     exit 1
 fi
 
-amountField=$([[ "$action" == "./buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
+amountField=$([[ "$action" == "$SCRIPT_DIR/buyAsset.sh" ]] && echo ".executedQty" || echo ".cummulativeQuoteQty")
 json=$("$action" "$firstStepSymbol" "$percentage" 2>/dev/null)
 
 if [ $? -eq 0 ] && [ -n "$json" ]; then
