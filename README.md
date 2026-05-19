@@ -13,7 +13,7 @@ Secret Key<br>
 
 Replace lines two and four with your API key and secret key.
 
-Run "systemctl restart systemd-timesyncd" to ensure your clock is properly in sync.
+Run "sudo systemctl restart systemd-timesyncd" to ensure your clock is properly in sync.
 
 Followed by StopLimitChain.sh
 
