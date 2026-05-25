@@ -1,8 +1,10 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # Binance API credentials
-API_KEY="$(sed -n '2p' binanceApikey)"
-API_SECRET="$(sed -n '4p' binanceApikey)"
+API_KEY="$(sed -n '2p' $SCRIPT_DIR/binanceApikey)"
+API_SECRET="$(sed -n '4p' $SCRIPT_DIR/binanceApikey)"
 BASE_URL="https://api.binance.com"
 
 # Function to calculate HMAC SHA256 signature
