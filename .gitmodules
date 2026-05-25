@@ -1,3 +1,6 @@
 [submodule "oco"]
 	path = oco
 	url = https://github.com/ronanokane/ocoChain
+[submodule "trailingStop"]
+	path = trailingStop
+	url = https://github.com/ronanokane/trailingAtrStop.git
