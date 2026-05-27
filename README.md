@@ -1,4 +1,4 @@
-PURPOSE
+Purpose
 =======
 
 Binance doesn’t support limit or stop orders for unlisted fiat/stablecoin pairs. This project combines a ticker (3400+ symbols) and indirect two-step orders to fill that gap. Originally wrote to get around the removal of ZEC/USDC pair listing. You could only buy it with ETH and BTC. This forces someone into buying into volatility just to place an order. This script allows orders to be placed without first buying an intermediary crypto. Infact the intermediary crypto is not bought or sold until the trigger is met.
