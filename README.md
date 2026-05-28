@@ -1,7 +1,9 @@
 Purpose
 =======
 
-Binance doesn’t support limit or stop orders for unlisted fiat/stablecoin pairs. This project combines a ticker (3400+ symbols) and indirect two-step orders to fill that gap. Originally wrote to get around the removal of ZEC/USDC pair listing. You could only buy it with ETH and BTC. This forces someone into buying ETH or BTC first just to place an order. This script removes the need to have a tradeable pair first to place the order as the buy or sell action comes later and is a seperate script anyway.
+Binance doesn’t support limit or stop orders for unlisted fiat/stablecoin pairs. This project combines a ticker (3400+ symbols) and indirect two-step orders to fill that gap. 
+
+Originally wrote to get around the removal of ZEC/USDC pair listing. You could only buy it with ETH and BTC. This script removes the need to have a tradeable pair first to place the order as the buy or sell action comes later and is a seperate script anyway.
 
 Dependencies
 ------------
