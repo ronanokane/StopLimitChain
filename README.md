@@ -73,7 +73,7 @@ Also, another neat trick over native limit and stops is you can mix different sy
 ./StopLimitChain.sh LIMITBUY AAVE/USDC 80 - - 100 && ./buyAsset.sh AAVE/BTC 10
 ```
 
-Or reoute the buy via ETH/USDC if AAVE/BTC pair doesn't exist as tradeable.
+Or reroute the buy via ETH/USDC if AAVE/BTC pair doesn't exist as tradeable.
 
 ```
 ./StopLimitChain.sh LIMITBUY AAVE/USDC 80 - - 100 && ./twoStep.sh BUY ETH/USDC AAVE/ETH 10
