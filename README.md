@@ -77,7 +77,7 @@ The following buys 40 AAVE with your USDC balance.
 
 Two step routing however, is only supported in percent mode (due to slippage complexity) so just use the main script for that task. 
 
-However, if you find yourself required to perform this operaton outside of the main script there is a twoStep.sh script that does the operation.
+However, if you are required to perform this operaton outside of the main script there is a twoStep.sh script.
 
 ```
 ./twoStep.sh <OPERATION> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENT_SELL/BUY>
