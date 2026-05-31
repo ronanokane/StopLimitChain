@@ -67,23 +67,4 @@ STOP LIMIT buy
 ```
 ./StopLimitChain.sh STOPBUY RENDER/USDC 1.695 - - 100 && ./StopLimitChain.sh LIMITBUY RENDER/USDC 1.705 RENDER/USDC - 100
 ```
-Also, you can mix different symbols in the workflow eg you can sell 10% of your btc for aave when aave hits x dollars. Something not possible with native stop/limit orders.
-
-```
-./StopLimitChain.sh LIMITBUY AAVE/USDC 80 - - 100 && ./buyAsset.sh AAVE/BTC 10
-```
-
-Or reroute the buy via ETH/USDC if AAVE/BTC pair doesn't exist as tradeable.
-
-```
-./StopLimitChain.sh LIMITBUY AAVE/USDC 80 - - 100 && ./twoStep.sh BUY ETH/USDC AAVE/ETH 10
-```
-
-Both buyAsset.sh and sellAsset.sh has a -a option that can also be used to specify actual amount of X in X/Y rather than just percentage.
-
-```
-buyAsset.sh <symbol> -a <actual_amount>
-```
-
-
 
