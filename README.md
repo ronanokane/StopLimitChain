@@ -67,10 +67,19 @@ STOP LIMIT buy
 ```
 ./StopLimitChain.sh STOPBUY RENDER/USDC 1.695 - - 100 && ./StopLimitChain.sh LIMITBUY RENDER/USDC 1.705 RENDER/USDC - 100
 ```
-If you need to deal with actual crypto amounts not percentages you can use the -a option in buyAsset.sh or sellAsset.sh. 
+If you need to deal with actual crypto amounts not percentages you can use the -a option in buyAsset.sh or sellAsset.sh.
 
 The following buys 40 AAVE with your USDC balance.
 
 ```
-./StopLimitChain.sh LIMITBUY AAVE/USDC 80 - - 100 && ./buyAsset AAVE/USDC -a 40
+./StopLimitChain.sh LIMITBUY AAVE/USDC 80 - - 100 && ./buyAsset.sh AAVE/USDC -a 40
+```
+
+Two step routing however, is only supported in percent mode (due to slippage complexity) so just use the main script for that task. 
+
+However, if you find yourself required to perform this operaton outside of the main script there is a twoStep.sh script that does the operation.
+
+```
+./twoStep.sh <OPERATION> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENT_SELL/BUY>
+
 ```
