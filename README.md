@@ -79,4 +79,11 @@ Or reoute the buy via ETH/USDC if AAVE/BTC pair doesn't exist as tradeable.
 ./StopLimitChain.sh LIMITBUY AAVE/USDC 80 - - 100 && ./twoStep.sh BUY ETH/USDC AAVE/ETH 10
 ```
 
+buyAsset.sh and sellAsset.sh has a -a option that can also be used to specify actual amount of X in X/Y rather than just percentage.
+
+```
+buyAsset.sh <symbol> -a <actual_amount>
+```
+
+
 
