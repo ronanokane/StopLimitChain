@@ -75,11 +75,10 @@ The following buys 40 AAVE with your USDC balance.
 ./StopLimitChain.sh LIMITBUY AAVE/USDC 80 - - 100 && ./buyAsset.sh AAVE/USDC -a 40
 ```
 
-Two step routing however, is only supported in percent mode (due to slippage complexity) so just use the main script for that task. 
-
-However, if you are required to perform this operaton outside of the main script you can use twoStep.sh.
+TwoStep.sh also supports actual amounts with -a at the end and can be used to do the market order routing beyond percentages.
 
 ```
-./twoStep.sh <BUY|SELL> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENT_SELL/BUY>
+./twoStep.sh <BUY|SELL> <STEP1_SYMBOL> <STEP2_SYMBOL> <actual amount> -a
+./twoStep.sh <BUY|SELL> <STEP1_SYMBOL> <STEP2_SYMBOL> <PERCENT> -p
 
 ```
