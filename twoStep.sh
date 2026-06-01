@@ -84,8 +84,6 @@ else
     json=$("$action" "$firstStepSymbol" -a "$amountRequired" 2>/dev/null)
 fi
 
-echo "$action $firstStepSymbol $amountRequired"
-
 if [ $? -eq 0 ] && [ -n "$json" ]; then
     amount=$(echo "$json" | jq -r "$amountField")
 
