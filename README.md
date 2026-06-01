@@ -67,9 +67,9 @@ STOP LIMIT buy
 ```
 ./StopLimitChain.sh STOPBUY RENDER/USDC 1.695 - - 100 && ./StopLimitChain.sh LIMITBUY RENDER/USDC 1.705 RENDER/USDC - 100
 ```
-If you need to deal with actual crypto amounts not percentages you can use the -a option in buyAsset.sh or sellAsset.sh to execute market buy/sells.
+If you need to deal with actual amounts not percentages you can use the -a option in buyAsset.sh or sellAsset.sh to execute market buy/sells.
 
-The following buys 40 AAVE with your USDC balance.
+The following buys 40 dollars worth of AAVE with your USDC balance.
 
 ```
 ./StopLimitChain.sh LIMITBUY AAVE/USDC 80 - - 100 && ./buyAsset.sh AAVE/USDC -a 40
