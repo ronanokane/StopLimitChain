@@ -88,4 +88,4 @@ esac
 
 ticker_symbol="${ticker_symbol///}"
 
-. "./tickerHook.sh" "$ticker_symbol" callBack
+. "$SCRIPT_DIR/tickerHook.sh" "$ticker_symbol" callBack
