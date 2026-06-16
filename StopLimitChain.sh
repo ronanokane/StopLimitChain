@@ -82,17 +82,10 @@ case "$operation" in
         ;;
 esac
 
-validSymbol(){
-    local symbol=$(echo $1 | tr -d /)
-    echo "$binance_symbols" | grep -q "^${symbol}$"
-}
+[[ $ticker_symbol == *"/"* ]] || { echo "Ticker symbol missing bracket"; exit 1; }
+[[ $firstStepSymbol == *"/"* || $firstStepSymbol == "-" ]] || { echo "First step symbol must be in the format ETH/USDC or \"-\" to skip"; exit 1; }
+[[ $secondStepSymbol == *"/"* || $secondStepSymbol == "-" ]] || { echo "Second step symbol must be in the format ETH/BTC or \"-\" to skip"; exit 1; }
 
-binance_symbols=$(curl -s "https://api.binance.com/api/v3/exchangeInfo" | jq -r '.symbols[].symbol')
+ticker_symbol="${ticker_symbol///}"
 
-! validSymbol "$ticker_symbol" && echo "$ticker_symbol is invalid... select another" && exit 1
-[ "$secondStepSymbol" != "-" ] && ! validSymbol "$secondStepSymbol" && echo "$secondStepSymbol is invalid.. select another" && exit 1;
-[ "$firstStepSymbol" != "-" ] && ! validSymbol "$firstStepSymbol" && echo "$fistStepSymbol is invalid.. select another" && exit 1;
-
-ticker_symbol="$(echo $ticker_symbol | tr -d /)"
-
-. "$SCRIPT_DIR/tickerHook.sh" "$ticker_symbol" callBack
+. "./tickerHook.sh" "$ticker_symbol" callBack
