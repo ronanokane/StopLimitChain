@@ -25,6 +25,8 @@ handle_tick() {
     fi
 }
 
+trap 'exit 1' INT TERM EXIT
+
 while read -r line; do
     handle_tick "$line"
 done < <(websocat -n "$WEBSOCKET_URL" 2>/dev/null)
