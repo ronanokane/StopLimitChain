@@ -5,12 +5,14 @@ if [ "$#" -ne 2 ]; then
     exit 1
 fi
 
-CRYPTO_SYMBOL=$(echo "$1" | tr '[:upper:]' '[:lower:]')
-CALLBACK=$2
+CRYPTO_SYMBOL="${1^^}"
+CALLBACK="$2"
 
 WEBSOCKET_URL="wss://stream.binance.com:9443/ws/${CRYPTO_SYMBOL}@trade"
 
-last_price=""
+last_price="$(curl -s "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDC" | jq '.price | tonumber')"
+
+"$CALLBACK" "$last_price" "$CRYPTO_SYMBOL" && exit 0
 
 handle_tick() {
     local data="$1"
