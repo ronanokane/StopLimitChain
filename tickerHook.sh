@@ -10,7 +10,7 @@ CALLBACK="$2"
 
 WEBSOCKET_URL="wss://stream.binance.com:9443/ws/${CRYPTO_SYMBOL}@trade"
 
-last_price="$(curl -s "https://api.binance.com/api/v3/ticker/price?symbol=BTCUSDC" | jq '.price | tonumber')"
+last_price="$(curl -s https://api.binance.com/api/v3/ticker/price?symbol=$CRYPTO_SYMBOL | jq '.price | tonumber')"
 
 "$CALLBACK" "$last_price" "$CRYPTO_SYMBOL" && exit 0
 
